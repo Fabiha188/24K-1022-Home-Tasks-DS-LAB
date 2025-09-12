@@ -151,7 +151,7 @@ int main(){
     library.searchByValue("Siyaah");
     cout<<"\nSearching Book By Position: ";
     library.SearchByPosition(2);
-
+     library.SearchByPosition(0);
 
     
 
