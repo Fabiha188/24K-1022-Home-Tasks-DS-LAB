@@ -38,8 +38,9 @@ int main(){
     }
     cout<<"Sum Of Scores:\n";
     for(int i=0;i<r;i++){
-        cout<<"Team "<<i+1<<": \n";
+        cout<<"Team "<<i+1<<": ";
         cout<<arr[i];
+        cout<<endl;
     }
 	for(int i=0;i<r;i++){
 		delete[] scores[i];
