@@ -17,55 +17,40 @@ public:
     ~Stack() {
         delete[] arr;
     }
-    bool IsEmpty() {
-        return top == -1;
-    }
-    bool isFull() {
-        return top == size - 1;
-    }
+    bool IsEmpty() { return top == -1; }
+    bool isFull() { return top == size - 1; }
+
     void push(double v) {
         if (isFull()) {
-            cout << "Stack overflow! Cannot push.\n";
+            cout << "Stack overflow!\n";
             return;
         }
         arr[++top] = v;
     }
     double pop() {
         if (IsEmpty()) {
-            cout << "Stack underflow! Expression invalid.\n";
+            cout << "Stack underflow!\n";
             return 0;
         }
         return arr[top--];
     }
-    double topp() {
-        if (IsEmpty()) {
-            cout << "Stack is Empty.\n";
-            return 0;
-        }
-        return arr[top];
-    }
 };
-
 
 bool isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
 }
 
-
 double evaluatePrefix(string exp) {
     Stack s(exp.length());
 
-    
     for (int i = exp.length() - 1; i >= 0; i--) {
         char ch = exp[i];
 
-        if (ch == ' ')
-            continue;
+        if (ch == ' ') continue;
 
-        
         if (isdigit(ch)) {
             double num = 0;
-            int base = 1;
+            double base = 1;
 
             
             while (i >= 0 && isdigit(exp[i])) {
@@ -76,9 +61,7 @@ double evaluatePrefix(string exp) {
             i++; 
             s.push(num);
         }
-
         else if (isOperator(ch)) {
-            // Pop two operands
             double v1 = s.pop();
             double v2 = s.pop();
             double res = 0;
@@ -93,7 +76,7 @@ double evaluatePrefix(string exp) {
             s.push(res);
         }
         else {
-            cout << "Invalid character in expression: " << ch << endl;
+            cout << "Invalid character: " << ch << endl;
             return 0;
         }
     }
@@ -102,21 +85,12 @@ double evaluatePrefix(string exp) {
 }
 
 int main() {
-    string expres;
-    cout << "Enter a prefix expression (example: - + 2 3 * 4 5 or -+23*49): ";
-    getline(cin, expres);
+    string exp;
+    cout << "Enter prefix expression (example: - + 23 5 49 or -+23549): ";
+    getline(cin, exp);
 
-    double result = evaluatePrefix(expres);
+    double result = evaluatePrefix(exp);
     cout << "\nFinal Result = " << result << endl;
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
