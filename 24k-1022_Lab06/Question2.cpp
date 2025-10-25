@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cmath>  // for mathematical operations if needed
+#include <cmath>  
 using namespace std;
 
 class Stack{
