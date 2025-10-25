@@ -89,7 +89,8 @@ int main() {
         switch (choice) {
         case 1:
             cout << "Enter Patron Name: ";
-            cin >> name;
+            cin.ignore();
+            getline(cin,name);
             libraryQueue.enqueue(name);
             break;
         case 2:
