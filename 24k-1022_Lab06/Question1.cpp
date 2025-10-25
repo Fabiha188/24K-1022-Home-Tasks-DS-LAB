@@ -1,91 +1,104 @@
-//stack implementation
 #include <iostream>
-using namespace std;
 #include <string>
+using namespace std;
 
-class call{
-    public:
+class Call {
+public:
     string name;
-    string time;
     string number;
-    call(){
-        name="";
-        time="";
-        number="";
+    string duration;
+
+    Call() {
+        name = "";
+        number = "";
+        duration = "";
     }
-    call(string n,string t,string nu){
-        name=n;
-        time=t;
-        number=nu;
+
+    Call(string n, string num, string d) {
+        name = n;
+        number = num;
+        duration = d;
     }
-    void display(){
-        cout<<"Name: "<<name<<endl;
-        cout<<"Number: "<<number<<endl;
-        cout<<"Call Time: "<<time<<endl;
+
+    void display() {
+        cout << "Name: " << name << endl;
+        cout << "Number: " << number << endl;
+        cout << "Duration: " << duration << endl;
     }
-    
 };
-class Stack{
-    private:
-    int top;
+
+class Stack {
+private:
+    int topIndex;
     int limit;
-    call* array;
-    public:
-    Stack(int s){
-        limit=s;
-        top=-1;
-        array=new call[limit];
+    Call* array;
+
+public:
+    Stack(int s) {
+        limit = s;
+        topIndex = -1;
+        array = new Call[limit];
     }
-    ~Stack(){
+
+    ~Stack() {
         delete[] array;
     }
 
-    bool isEmpty(){
-        return top==-1;
+    bool empty() {
+        return topIndex == -1;
     }
-    bool isFull(){
-        return top==limit-1;
+
+    bool isFull() {
+        return topIndex == limit - 1;
     }
-    void push(call c){
-        if(isFull()){
-            cout<<"The  Stack is Overfull\n";
+
+    void push(Call c) {
+        if (isFull()) {
+            cout << "Call history is full! Cannot add new calls.\n";
             return;
         }
-        array[++top]=c;
-        cout<<"New Call Added To History....\n";
+        array[++topIndex] = c;
+        cout << " New call added to history.\n";
+        displayAll();
     }
-    void pop(){
-        if(isEmpty()){
-            cout<<"The Call History Is Empty\n";
+
+    void pop() {
+        if (empty()) {
+            cout << " The call history is empty.\n";
             return;
         }
-        cout<<"Removed Call: \n";
-        array[top].display();
-        top--;
+        cout << " Removed Call:\n";
+        array[topIndex].display();
+        topIndex--;
+        displayAll();
     }
-    void peek(){
-        if(isEmpty()){
-            cout<<"No  Recent Call...\n";
+
+    void top() {
+        if (empty()) {
+            cout << " No recent call.\n";
             return;
         }
-        cout<<"----Most Recent Call----\n";
-        array[top].display();
-        cout<<"\n------------------------\n";
+        cout << "\n---- Most Recent Call ----\n";
+        array[topIndex].display();
+        cout << "--------------------------\n";
     }
-    void displayAll(){
-        if(isEmpty()){
-            cout<<"Call History Is Empty...\n";
+
+    void displayAll() {
+        if (empty()) {
+            cout << "\n Call history is empty.\n";
             return;
         }
-        cout<<"\n======Call History=========\n";
-        for(int i=top;i>=0;i--){
-            cout<<"Call "<<i+1<<": \n";
+        cout << "\n====== Current Call History ======\n";
+        for (int i = topIndex; i >= 0; i--) {
+            cout << "Call " << (i + 1) << ":\n";
             array[i].display();
+            cout << "-----------------------\n";
         }
-        cout<<"\n=============================\n";
+        cout << "=================================\n";
     }
 };
-int main(){
+
+int main() {
     int size, choice;
     cout << "Enter maximum number of call records to store: ";
     cin >> size;
@@ -105,22 +118,23 @@ int main(){
 
         switch (choice) {
             case 1: {
-                string name, num, time;
+                string name, num, duration;
                 cin.ignore();
                 cout << "Enter Caller Name: ";
                 getline(cin, name);
                 cout << "Enter Phone Number: ";
                 getline(cin, num);
-                cout << "Enter Call Time (e.g., 10:30 PM): ";
-                getline(cin, time);
+                cout << "Enter Call Duration (e.g., 5 mins): ";
+                getline(cin, duration);
 
-                call c(name, time, num);
+                Call c(name, num, duration);
                 history.push(c);
                 break;
             }
 
             case 2:
-                history.peek();
+                history.top();
+                history.displayAll();
                 break;
 
             case 3:
@@ -132,18 +146,18 @@ int main(){
                 break;
 
             case 5:
-                if (history.isEmpty())
-                    cout << "Call History is Empty.\n";
+                if (history.empty())
+                    cout << "Call history is empty.\n";
                 else
-                    cout << " Call History has records.\n";
+                    cout << " Call history has records.\n";
                 break;
 
             case 6:
-                cout << "Exiting Call History System... Goodbye!\n";
+                cout << " Exiting Call History System... Goodbye!\n";
                 break;
 
             default:
-                cout <<" Invalid Choice! Try again.\n";
+                cout << " Invalid choice! Try again.\n";
         }
 
     } while (choice != 6);
